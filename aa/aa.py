@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""This module 'aa' stands for Answer Agreement.
+"""A module for analyzing answer agreement.
 
 The experiment is this:
 
@@ -366,7 +366,8 @@ def create_mask(dataframe: pd.DataFrame, mask_first: str = None,
     return column_mask
 
 
-def refine_mask(dataframe, column_mask, mask_first=None, mask_last=None):
+def refine_mask(dataframe: pd.DataFrame, column_mask: list,
+                mask_first: str = None, mask_last: str = None):
     """Refine (clip) a column mask using first and last columns.
 
     It is assumed that the column mask is in order.
@@ -430,11 +431,12 @@ class GroupAgreement:
         """Initialize a GroupAgreement and do all relevant analysis.
 
         Args:
-            dataframe: The full dataframe for this group
-            group_id: The group id for this group
-            column_mask: A list of column labels for which columns to keep
-                and do analysis on. Default of None means to use all
-                columns.
+            dataframe: The full dataframe for this group.
+            group_id: The group id for this group. Could be any value
+                stored in a dataframe.
+            column_mask: A list of column labels for which columns to
+                keep and do analysis on. Default of None means to use
+                all columns.
         """
         self.dataframe = dataframe
         self.group_id = group_id
@@ -458,7 +460,7 @@ class GroupAgreement:
         various computed quantities.
 
         Args:
-            dataframe: The full dataframe for this group
+            dataframe: The full dataframe for this group.
 
         Returns:
             A dataframe with the computed quantities of interest.
@@ -539,6 +541,19 @@ class GroupAgreement:
         if self.column_mask is not None:
             masked_dataframe = self.dataframe[self.column_mask]
         return masked_dataframe
+
+    @property
+    def disagree_dataframe(self) -> pd.DataFrame:
+        """Return the dataframe of questions with disagreement.
+
+        Returns:
+            The subset of rows of the masked dataframe where there is
+            disagreement and at least one answer.
+        """
+        completed_mask = ~self.agreement_results['all_missing']
+        some_disagreement = ~self.agreement_results['group_all_correct']
+        masked = self.masked_dataframe
+        return masked.loc[:, completed_mask & some_disagreement]
 
     def print_summary(self):
         """Print a summary of results."""
