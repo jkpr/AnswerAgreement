@@ -7,11 +7,27 @@ The experiment is this:
 
 This dataset is analyzed with this module.
 
+# Installation
+
+Install with
+
+```
+$ python3 -m pip install https://github.com/jkpr/AnswerAgreement/zipball/master
+```
+
+and upgrade with
+
+```
+$ python3 -m pip install --upgrade https://github.com/jkpr/AnswerAgreement/zipball/master
+```
+
+# Description
+
 A dataset is all submissions for a survey. A column in the dataset
 should identify which submitted surveys belong to which group. The
 simplest way to do this is to have a `group_id` column.
 
-Standard use cases for analysis are take as input a dataset and
+Standard use cases for analysis take as input a dataset and
 possibly a start and end column. In that case, the following analyzes:
 
 ```

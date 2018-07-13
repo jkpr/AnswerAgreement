@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from aa import __version__
 
 
-packages = find_packages()
+packages = find_packages(exclude=['test'])
 
 
 setup(
