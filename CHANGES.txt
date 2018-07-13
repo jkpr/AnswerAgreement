@@ -1,2 +1,7 @@
+v0.1.1, 13 July 2018
+* Added test data
+* README more readable, has example with test data
+* Improved code documentation
+
 v0.1.0, 28 March 2018
 * First release
